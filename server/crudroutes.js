@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const pins = require('./models/pins'); // schema for pins
-const isLoggedIn = require('./Authentication_Config/isloggedin');
+const isLoggedIn = require('./AuthConfig/isloggedin');
 
 /* CRUD utilities */
 /* Isolate auth service used from req.user */

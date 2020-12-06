@@ -33,20 +33,6 @@ const authRoutes = (app, passport) => {
     res.redirect('/');
   });
 
-  // =====================================
-  // TWITTER ROUTES ======================
-  // =====================================
-  app.get('/auth/twitter', passport.authenticate('twitter'));
-
-  // handle the callback after twitter has authenticated the user, just go back to home in my case
-  app.get('/auth/twitter/callback',
-    passport.authenticate('twitter', {
-      successRedirect: '/',
-      failureRedirect: '/',
-    }));
-  // =====================================
-  // GOOGLE ROUTES =======================
-  // =====================================
   // login route
   app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
   // redirect from google

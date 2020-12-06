@@ -16,7 +16,7 @@ app.use(cookieSession({
 app.use(express.static(path.join(__dirname, '../client/public')));
 
 require('./models/db'); // mongoose required common db
-require('./Authentication_Config/authserver')(app);
+require('./AuthConfig/authserver')(app);
 app.use(require('./crudroutes'));
 
 app.get('*', (req, res) => {
