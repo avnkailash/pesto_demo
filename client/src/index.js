@@ -1,11 +1,6 @@
-// primary module that ties store actions with reducers
-
-// redux modules
 import { applyMiddleware, createStore } from 'redux';
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-// react modules
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';

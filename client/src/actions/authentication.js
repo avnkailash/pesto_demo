@@ -6,6 +6,7 @@ import axios from 'axios';
 export const getUser = () => dispatch => (
   axios.get('/auth/profile')
     .then((response) => {
+      console.log(response);
       dispatch({
         type: 'GET_USER_STATUS',
         payload: response.data,

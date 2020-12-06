@@ -30,7 +30,6 @@ class Menu extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Menu just Mounted');
     const { getUser: getUserStatus } = this.props;
     getUserStatus();
     this.setState(
@@ -90,6 +89,7 @@ class Menu extends React.Component {
     } = this.state;
     const { user: { authenticated, username } } = this.props;
     if (!ready) return null;
+    console.log("Authentication Status = ", authenticated);
     if (!authenticated) {
       // render guest menu bar
       return (
@@ -109,7 +109,7 @@ class Menu extends React.Component {
               <i className="fa fa-sign-in" aria-hidden="true" />
             </span>
             <span className="buttontext">
-              {'Login'}
+              {'Login with Google'}
             </span>
           </button>
           </div>

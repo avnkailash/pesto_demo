@@ -9,6 +9,14 @@ const authRoutes = (app, passport) => {
     ip = (ip === '::1') ? 'local' : ip;
     let service = Object.keys(req.user._doc).filter(s => s !== '__v' && s !== '_id');
     [service] = service.filter(s => Object.keys(req.user._doc[s]).length);
+    if(req.user[service].username === 'Guest'){
+      res.json({
+        authenticated: false,
+        userip: ip,
+        username: 'Guest',
+        displayname: 'Guest',
+      });
+    }
     res.json({
       authenticated: true,
       userip: ip,
@@ -19,19 +27,6 @@ const authRoutes = (app, passport) => {
     });
   });
 
-  // guest login path -- fake authentication to provide
-  // semi/persistence instaed of doing it on client side
-  app.get('/auth/guest', (req, res) => {
-    const headerObject = req.headers; // need for ip
-    let ip = (headerObject['x-forwarded-for'] || req.socket.remoteAddress).split(',')[0];
-    ip = (ip === '::1') ? 'local' : ip;
-    res.json({
-      authenticated: false,
-      userip: ip,
-      username: 'Guest',
-      displayname: 'Guest',
-    });
-  });
   // route for logging out
   app.get('/auth/logout', (req, res) => {
     req.logout();

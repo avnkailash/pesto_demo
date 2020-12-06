@@ -2,15 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setGuest } from '../../actions/authentication';
 import './loginbuttons.scss';
 
 const mapStateToProps = state => state;
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    setGuest,
-  }, dispatch)
-);
+
 
 class LoginButtons extends React.Component {
 
@@ -18,17 +13,9 @@ class LoginButtons extends React.Component {
       window.location = loc;
     }
 
-    handleGuest = () => { // set guest user
-      const { setGuest: setGuestStatus, guest } = this.props;
-      setGuestStatus();
-      guest(); // callback to hid login div
-    }
-
     render() {
       return (
         <React.Fragment>
-
-          
           <button
             type="submit"
             id="googleloginbutton"
@@ -47,7 +34,7 @@ class LoginButtons extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginButtons);
+export default connect(mapStateToProps)(LoginButtons);
 
 LoginButtons.propTypes = {
   // redux action to set guest user status on server

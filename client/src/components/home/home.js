@@ -22,6 +22,7 @@ class Home extends Component {
 
   componentDidMount() {
     getPins('All').then((pinsFromDB) => { // get all pins then setstate
+      console.log(pinsFromDB);
       this.setState({
         pinList: this.shuffleImages([...pinsFromDB]),
       });
@@ -29,13 +30,6 @@ class Home extends Component {
   }
 
   onBrokenImage = (id) => {
-    /*
-    handles broken image links
-    basically same as delete pic function but just
-    removes from state and not the databse as image
-    could become reactivated in a future time
-    still keep in database records until owner deletes
-    */
     const { pinList } = this.state;
     let pinListCopy = JSON.parse(JSON.stringify(pinList));
     const indexOfDeletion = pinListCopy.findIndex(p => p._id === id);
@@ -57,17 +51,14 @@ class Home extends Component {
   }
 
   layoutComplete = () => {
-    // fired by masonry call back
     const { imagesLoaded } = this.state;
-    // only set state on first true load
     if (imagesLoaded) return;
     this.setState({ imagesLoaded: true });
   }
 
   imageStatus = (element) => {
-    // finds the status of image to determine what kind of button to place on pic
-    if (element.hasSaved || element.owns) { // If the user has already saved this pin
-      return null; // no button
+    if (element.hasSaved || element.owns) {
+      return null;
     }
     // user has not saved this pin show save button
     return (
@@ -133,38 +124,25 @@ class Home extends Component {
       displayPinZoom, imageInfo, pinList, imagesLoaded, displaySignIn,
     } = this.state;
     const userStatus = username !== null;
-    if (userStatus) {
-      return (
-        <React.Fragment>
-          {
-            !authenticated
-              ? (
-                <SignIn
-                  show={displaySignIn}
-                  removeSignin={() => this.setState({ displaySignIn: false })}
-                  caller="home"
-                />
-              )
-              : null
-          }
-          <ImageBuild
-            layoutComplete={this.layoutComplete}
-            pinEnlarge={this.pinEnlarge}
-            onBrokenImage={this.onBrokenImage}
-            status={this.imageStatus}
-            pinList={pinList}
-            imagesLoaded={imagesLoaded}
-          />
-          <PinZoom
-            message={displayPinZoom}
-            reset={() => this.setState({ displayPinZoom: false })}
-            zoomInfo={imageInfo}
-          />
-          <div className={displayPinZoom ? 'modal-overlay' : ''} />
-        </React.Fragment>
-      );
-    }
-    return null;
+    console.log("User status = ", userStatus)
+    return (
+      <React.Fragment>
+        <ImageBuild
+          layoutComplete={this.layoutComplete}
+          pinEnlarge={this.pinEnlarge}
+          onBrokenImage={this.onBrokenImage}
+          status={this.imageStatus}
+          pinList={pinList}
+          imagesLoaded={imagesLoaded}
+        />
+        <PinZoom
+          message={displayPinZoom}
+          reset={() => this.setState({ displayPinZoom: false })}
+          zoomInfo={imageInfo}
+        />
+        <div className={displayPinZoom ? 'modal-overlay' : ''} />
+      </React.Fragment>
+    );
   }
 
 }
